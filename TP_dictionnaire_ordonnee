@@ -1,0 +1,26 @@
+#python 3.10.0
+
+from _typeshed import Self
+
+
+class DictionnaireOrdonne :
+
+    def __init__(Self):
+        """Constructeur vide : initialisé l'appel du dictionnaire ordonné"""
+        pass
+    def __init__(self, dictionnaire):
+        """Second Constructeur: Copier un dictionnaire et le renvoyer comme tel."""
+        liste_cle=list()
+        liste_valeur=list()
+        dict_copy= {}
+
+        for cle, valeur in dictionnaire.items():
+            liste_cle=cle
+            liste_valeur=valeur
+        
+        for indice,cle_list in enumerate(liste_cle):
+
+            dict_copy[cle_list]= liste_valeur[indice]
+        
+        return dict_copy
+    
