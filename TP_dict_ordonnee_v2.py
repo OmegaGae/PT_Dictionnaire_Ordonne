@@ -3,10 +3,12 @@
 class DictionnaireOrdonne :
 
     
-    def __init__(self, dictionnaire=dict(),**parametresN_dict):
+    def __init__(self, dictionnaire = dict(),**parametresN_dict):
+        """Initialisation de objet conteneurs de trois maniere differentes: dict(), dict("p":2,"d":3), dict(dict1)\
+            creation de deux listes contenant respectivement la cle et la valeur correspondant de l'objet conteneur"""
         
-        self._liste_cle=list()
-        self._liste_valeur=list()
+        self._liste_cle=list() # attribut privé
+        self._liste_valeur=list() #attribut privé
         
 
         if (type(dictionnaire)  is not dict) and (type(dictionnaire) is not DictionnaireOrdonne):
@@ -24,23 +26,31 @@ class DictionnaireOrdonne :
         
 
     def __repr__(self):
-        """Representation des dictionnaires"""
-        self._string_dict="{"
+        """Representation des dictionnaires sur le terminal"""
+        self._string_dict="{" #attr privé
+        _nbr_cle= len(self._liste_cle) #attr privé
 
         for i, elem in enumerate(self._liste_cle):
-            self._string_dict= self._string_dict + elem + ":" + self._liste_valeur[i]
 
-    
+            if i < _nbr_cle-1:
+                self._string_dict= self._string_dict + str(elem) + ":" + str(self._liste_valeur[i]) + ","
+            else:
+                self._string_dict= self._string_dict + str(elem) + ":" + str(self._liste_valeur[i])
+
+        
+        self._string_dict = "".join(self._string_dict) +"}"+"\n"
+
         return "{}".format(self._string_dict)
 
     def __str__(self):
+        """méthode appelée lorsque qu'un objet est appelée dans print(), elle va appeler __repr__"""
         return repr(self)
 
     def __getitem__(self,index):
         """méthode appelée lorsqu'on fait objet[index]\
             elle va rediriger vers self._dict_conteneur"""
         try :
-            _found_ind=False #attr local pas d acces
+            _found_ind=False #attr local pas d acces et attr privé
             for i,cle in enumerate(self._liste_cle):
                 if cle == index :
                     _found_ind=True
@@ -57,13 +67,14 @@ class DictionnaireOrdonne :
         for i,cle in enumerate(self._liste_cle):
             if cle == index:
                 self._liste_valeur[i]=valeur
-            else:
-                self._liste_cle.append(index)
-                self._liste_valeur.append(valeur)
         
-    def __delattr__(self, index):
+        self._liste_cle.append(index)
+        self._liste_valeur.append(valeur)
+        
+                
+    def __delitem__(self, index):
         """descrution d'un élément de l'objet conteneur"""
-        _found_ind=False #attr local pas d'acces
+        _found_ind=False #attr local pas d'acces et  privé
         try:
             for i,cle in enumerate(self._liste_cle):
                 if cle == index:
@@ -74,9 +85,41 @@ class DictionnaireOrdonne :
         except AssertionError as ass:
             "Exception:{} occured, this key does not exit in this dictionnary, so impossible to delete".format(ass)
             
-    def longueurList (self):
-        """methode permettant de verifier si la liste des valeurs et des clés ont la même longueur"""
-        return len(self._liste_cle) == len(self._liste_valeur)
+    def __len__(self):
+        """methode permettant d'obtenir la longueur du conteneur"""
+        return len(self._liste_cle)
+    
+    def __contains__ (self,objt_c):
+        """Méthode renvoyant un booléenne si l'objet cherché est contenu dans l'objet conteneur"""
+        _bool_con=False #attr privé
+        for i in self._liste_cle:
+            if i == objt_c:
+                _bool_con=True
+
+        return _bool_con
+    
+    def __iter__ (self):
+        """méthode permettant de créer un objet qui va pouvoir parcourir\
+            l'objet conteneur """
+        return DictionnaireOrdonne(self)
+    
+    def __next__(self):
+        """méthode qui va permettre a l'objet itérateur de passer d'un \
+            élément à l'autre dans l'objet conteneur"""
+        
+        self.position=0
+        
+        if self.position == len (self._liste_cle):
+            raise StopIteration 
+        self.position+=1
+
+        return self._liste_cle[self.position] 
+
+
+
+
+
+
         
 
         
