@@ -12,6 +12,6 @@ print(dict2)
 print(dict3)
 print(dict4)
 
-dict2["chanpion"]=6
-dict2[23]="eeczc"
-print(dict2)
+#dict2["chanpion"]=6
+#dict2[23]="eeczc"
+#print(dict2)
