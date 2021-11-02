@@ -1,4 +1,5 @@
 #python 3.10.0
+import json #petite triche car import json non vu dans le cours sera utile pour str -> dict()
 
 class DictionnaireOrdonne :
 
@@ -9,19 +10,20 @@ class DictionnaireOrdonne :
         
         self._liste_cle=list() # attribut privé
         self._liste_valeur=list() #attribut privé
+        self.position=-1
         
 
         if (type(dictionnaire)  is not dict) and (type(dictionnaire) is not DictionnaireOrdonne):
             raise TypeError("Cecin'est pas un dictionnaire, veuillez entrer un dictionnaire soit d" \
                 "type dict, ou DictionnaireOrdonne")
+        else:
+            for cle in dictionnaire:
+                self._liste_cle.append(cle)
+                self._liste_valeur.append(dictionnaire[cle])
         
-        for cle,value in dictionnaire.items():
-            self._liste_cle.append(cle)
-            self._liste_valeur.append(value)
-      
-        for clep,valuep in parametresN_dict.items():
-            self._liste_cle.append(clep)
-            self._liste_valeur.append(valuep)
+            for clep,valuep in parametresN_dict.items():
+                self._liste_cle.append(clep)
+                self._liste_valeur.append(valuep)
         
         
 
@@ -33,9 +35,9 @@ class DictionnaireOrdonne :
         for i, elem in enumerate(self._liste_cle):
 
             if i < _nbr_cle-1:
-                self._string_dict= self._string_dict + str(elem) + ":" + str(self._liste_valeur[i]) + ","
+                self._string_dict= self._string_dict +"\""+ str(elem)+"\""+ ":" + str(self._liste_valeur[i]) + ","
             else:
-                self._string_dict= self._string_dict + str(elem) + ":" + str(self._liste_valeur[i])
+                self._string_dict= self._string_dict +"\"" + str(elem) + "\"" + ":" + str(self._liste_valeur[i])
 
         
         self._string_dict = "".join(self._string_dict) +"}"+"\n"
@@ -101,19 +103,45 @@ class DictionnaireOrdonne :
     def __iter__ (self):
         """méthode permettant de créer un objet qui va pouvoir parcourir\
             l'objet conteneur """
-        return DictionnaireOrdonne(self)
+        return self
     
     def __next__(self):
         """méthode qui va permettre a l'objet itérateur de passer d'un \
             élément à l'autre dans l'objet conteneur"""
         
-        self.position=0
-        
-        if self.position == len (self._liste_cle):
+        if self.position == len (self._liste_cle)-1:
             raise StopIteration 
         self.position+=1
 
-        return self._liste_cle[self.position] 
+        return self._liste_cle[self.position]
+        
+
+         
+    
+    def __add__ (self, objt_ajouter =dict()):
+        """Additionner des objets conteneurs entre eux: d1= d1 + d2"""
+        _objt_ajouter_dict=json.loads(str(objt_ajouter))  #petite triche car import json non vu dans le cours
+        if (type(_objt_ajouter_dict)  is not dict) and (type(_objt_ajouter_dict) is not DictionnaireOrdonne):
+            raise TypeError("Cecin'est pas un dictionnaire, veuillez entrer un dictionnaire soit d" \
+                "type dict, ou DictionnaireOrdonne")
+        else:
+            
+            for cle in dict(_objt_ajouter_dict):
+                self._liste_cle.append(cle)
+                self._liste_valeur.append(_objt_ajouter_dict[cle])
+            
+        return repr(self)
+    
+    
+
+        
+
+        
+        
+
+        
+
+
 
 
 
