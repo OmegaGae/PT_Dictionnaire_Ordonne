@@ -114,9 +114,7 @@ class DictionnaireOrdonne :
         self.position+=1
 
         return self._liste_cle[self.position]
-        
-
-         
+          
     
     def __add__ (self, objt_ajouter =dict()):
         """Additionner des objets conteneurs entre eux: d1= d1 + d2"""
@@ -130,8 +128,78 @@ class DictionnaireOrdonne :
                 self._liste_cle.append(cle)
                 self._liste_valeur.append(_objt_ajouter_dict[cle])
             
-        return repr(self)
+        return self
+
+    def sort (self, reverse = False):
+        """Fonction permettant de trier le dictionnaireOrdonnee: aissance de la classe"""
+        if reverse == False :
+
+            _tableau_positv_a_sorted=[]
+            _tableau_positv_b_sorted=[]
+            _tableau_sorted_cle =[]
+            _tableau_sorted_valeur = self._liste_cle #none _liste_cle create contracdiction
+
+            _tableau_sorted_cle = sorted(self._liste_cle)
+
+
+
+            for i1, elem1 in enumerate(self._liste_cle) :
+                _tableau_positv_b_sorted.append(elem1)
+                
+            for i2, elem2 in enumerate(_tableau_sorted_cle) :
+                _tableau_positv_a_sorted.append(elem2)
+                
+
+            for i3, elem3 in enumerate(_tableau_positv_b_sorted):
+
+                for i4, elem4 in enumerate (_tableau_positv_a_sorted) :
+                    
+                    if elem3 == elem4 :
+                        _tableau_sorted_valeur[i4] =self._liste_valeur[i3]
+                    else: 
+                        pass
+            
+            self._liste_cle = _tableau_sorted_cle
+            self._liste_valeur = _tableau_sorted_valeur
+
+            return self
+
+        elif reverse == True :
+
+            _tableau_positv_a_sorted=[]
+            _tableau_positv_b_sorted=[]
+            _tableau_sorted_cle =[]
+            _tableau_sorted_valeur =self._liste_cle
+
+            _tableau_sorted_cle = sorted(self._liste_cle, reverse = True)
+
+            for i1, elem1 in enumerate(self._liste_cle) :
+                _tableau_positv_b_sorted.append(elem1)
+                
+            for i2, elem2 in enumerate(_tableau_sorted_cle) :
+                _tableau_positv_a_sorted.append(elem2)
+                
+
+            for i3, elem3 in enumerate(_tableau_positv_b_sorted):
+
+                for i4, elem4 in enumerate (_tableau_positv_a_sorted) :
+                    
+                    if elem3 == elem4 :
+                        _tableau_sorted_valeur[i4] =self._liste_valeur[i3]
+                    else: 
+                        pass
+            
+            self._liste_cle = _tableau_sorted_cle
+            self._liste_valeur = _tableau_sorted_valeur
+
+            return self
+
+
+
+
     
+    
+
     
 
         

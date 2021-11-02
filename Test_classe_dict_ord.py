@@ -31,8 +31,23 @@ print(T_F)
 for cle in dict4:
     print (cle)
 
+
 dict2 = dict2 + dict4
 print(dict2)
+
+dict2.sort()
+print (dict2)
+
+dict2.sort(reverse=True)
+print (dict2)
+
+#still need to define
+dict2.keys() # methode will sent back a lsit of dict2 keys
+
+dict2.values() # methode will sent back a list of dict2 values
+
+for nom, qtt in dict2.items :
+    print ("{0} ({1})".format(nom,qtt))
 
 
 
