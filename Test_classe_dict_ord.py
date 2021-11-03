@@ -1,21 +1,21 @@
-#python 3.10.0
-#-*-coding:Latin-1 -*
+# python 3.10.0
+# -*-coding:Latin-1 -*
 
 import TP_dict_ordonnee_v2 as dic_ord
 
-dict1={"jil":0,"emely":8,"pierre":8}
-dict2= dic_ord.DictionnaireOrdonne()
-dict3= dic_ord.DictionnaireOrdonne(dict1)
-dict4= dic_ord.DictionnaireOrdonne(carotte = 26, haricot = 48, noix =27)
+dict1 = {"jil": 0, "emely": 8, "pierre": 8}
+dict2 = dic_ord.DictionnaireOrdonne()
+dict3 = dic_ord.DictionnaireOrdonne(dict1)
+dict4 = dic_ord.DictionnaireOrdonne(carotte=26, haricot=48, noix=27)
 
 print(dict2)
 print(dict3)
 print(dict4)
 
-dict2["pomme"]=6
-dict2["melon"]=5
-dict2["poire"]=10
-dict2["voiture"]=1000
+dict2["pomme"] = 6
+dict2["melon"] = 5
+dict2["poire"] = 10
+dict2["voiture"] = 1000
 
 print(dict2)
 
@@ -29,34 +29,22 @@ T_F = "melonr" in dict2
 print(T_F)
 
 for cle in dict4:
-    print (cle)
+    print(cle)
 
 
 dict2 = dict2 + dict4
 print(dict2)
 
 dict2.sort()
-print (dict2)
+print(dict2)
 
 dict2.sort(reverse=True)
-print (dict2)
+print(dict2)
 
-#still need to define
-print(dict2.keys()) # methode will sent back a lsit of dict2 keys
+# still need to define
+print(dict2.keys())  # methode will sent back a lsit of dict2 keys
 
-print(dict2.values()) # methode will sent back a list of dict2 values
+print(dict2.values())  # methode will sent back a list of dict2 values
 
-for nom, qtt in dict2.items() :
-    print ("{0} ({1})".format(nom,qtt))
-
-
-
-
-
-
-
-
-
-
-
-
+for nom, qtt in dict2.items():
+    print("{0} ({1})".format(nom, qtt))
