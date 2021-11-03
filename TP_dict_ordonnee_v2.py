@@ -10,7 +10,9 @@ class DictionnaireOrdonne :
         
         self._liste_cle=list() # attribut privé
         self._liste_valeur=list() #attribut privé
-        self.position=-1
+        self._position=-1 #attr de position pour la méthode next
+        self._items = False
+        
         
 
         if (type(dictionnaire)  is not dict) and (type(dictionnaire) is not DictionnaireOrdonne):
@@ -104,17 +106,24 @@ class DictionnaireOrdonne :
         """méthode permettant de créer un objet qui va pouvoir parcourir\
             l'objet conteneur """
         return self
+        
     
     def __next__(self):
         """méthode qui va permettre a l'objet itérateur de passer d'un \
             élément à l'autre dans l'objet conteneur"""
-        
-        if self.position == len (self._liste_cle)-1:
-            raise StopIteration 
-        self.position+=1
+        if self._items == False :
+            if self._position == len (self._liste_cle)-1:
+                raise StopIteration 
+            self._position+=1
 
-        return self._liste_cle[self.position]
-          
+            return self._liste_cle[self._position]
+        else:
+            if self._position == len (self._liste_cle)-1:
+                raise StopIteration 
+            self._position+=1
+
+            return self._liste_cle[self._position], self._liste_valeur[self._position]
+    
     
     def __add__ (self, objt_ajouter =dict()):
         """Additionner des objets conteneurs entre eux: d1= d1 + d2"""
@@ -193,9 +202,26 @@ class DictionnaireOrdonne :
             self._liste_valeur = _tableau_sorted_valeur
 
             return self
+    
+    def keys (self) :
+        """Méthode renvoyant une liste des clés de l'objet conteneur appelant"""
+        return self._liste_cle
 
+    def values (self) :
+        """Méthode renvoyant une liste des valeurs de l'objet conteneur appelant"""
+        return self._liste_valeur
 
+    def items (self) :
+        """Méthode permettant de renvoyer un tuple contenant la clé et la valeur\
+            de l'objet conteneur appelant"""
+        self._items = True
 
+        return iter(self)
+    
+    
+        
+        
+        
 
     
     
