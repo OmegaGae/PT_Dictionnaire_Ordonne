@@ -41,10 +41,10 @@ print(dict2)
 dict2.sort(reverse=True)
 print(dict2)
 
-# still need to define
-print(dict2.keys())  # methode will sent back a lsit of dict2 keys
 
-print(dict2.values())  # methode will sent back a list of dict2 values
+print(dict2.keys())  
+
+print(dict2.values())  
 
 for nom, qtt in dict2.items():
     print("{0} ({1})".format(nom, qtt))
