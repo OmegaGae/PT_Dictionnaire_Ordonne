@@ -1,15 +1,16 @@
 # python 3.10.0
-import json  
+import json
 import typing
 
+
 class DictionnaireOrdonne:
-    """Classe permmettant de gérer l'utilisation des objets conteneurs"""
+    """This class allows you to manage your own created container object"""
 
-    def __init__(self, dictionary:typing.Optional[dict]=dict(), **parameters):
-        """Initialisation de objet conteneurs de trois maniere differentes: dict(), dict("p":2,"d":3), dict(dict1)\
-            creation de deux listes contenant respectivement la cle et la valeur correspondant de l'objet conteneur"""
+    def __init__(self, dictionary: typing.Optional[dict] = dict(), **parameters):
+        """3 ways to create your own container object: dict(), dict("p":2,"d":3), dict(dict1)
+        here we create 2 lists which will be respectively the keys and the values"""
 
-        self.key = list()  
+        self.key = list()
         self.value = list()
         self.position = -1  # attr de position pour la méthode __next__
         self.item = False
@@ -18,8 +19,8 @@ class DictionnaireOrdonne:
             type(dictionary) is not DictionnaireOrdonne
         ):
             raise TypeError(
-                "Cecin'est pas un dictionnaire, veuillez entrer un dictionnaire soit d"
-                "type dict, ou DictionnaireOrdonne"
+                "This is not a dictionary, please enter either"
+                "a type dict, ou a type DictionnaireOrdonne dictionary"
             )
         else:
             for cle in dictionary:
@@ -31,9 +32,9 @@ class DictionnaireOrdonne:
                 self.value.append(valuep)
 
     def __repr__(self):
-        """Representation des dictionnaires sur le terminal"""
-        dictionary_str = "{"  
-        nbr_cle = len(self.key) 
+        """Dictionary representation on the terminal"""
+        dictionary_str = "{"
+        nbr_cle = len(self.key)
 
         for i, elem in enumerate(self.key):
 
@@ -49,12 +50,7 @@ class DictionnaireOrdonne:
                 )
             else:
                 dictionary_str = (
-                    dictionary_str
-                    + '"'
-                    + str(elem)
-                    + '"'
-                    + ":"
-                    + str(self.value[i])
+                    dictionary_str + '"' + str(elem) + '"' + ":" + str(self.value[i])
                 )
 
         dictionary_str = "".join(dictionary_str) + "}" + "\n"
@@ -62,27 +58,25 @@ class DictionnaireOrdonne:
         return "{}".format(dictionary_str)
 
     def __str__(self):
-        """méthode appelée lorsque qu'un objet est appelée dans print(), elle va appeler __repr__"""
+        """This function will be call when using print(), and it will call __repr__"""
         return repr(self)
 
     def __getitem__(self, index):
-        """méthode appelée lorsqu'on fait objet[index]\
-            elle va rediriger vers self._dict_conteneur"""
+        """This method will be call when you will do object[index]
+        it will go towards self._dict_conteneur"""
         try:
-            index_found = False  
+            index_found = False
             for i, cle in enumerate(self.key):
                 if cle == index:
                     index_found = True
                     return "{}".format(self.value[i])
             assert index_found
-        except AssertionError as ass:
-            "Exception:{} occured, this key does not exit in this dictionnary".format(
-                ass
-            )
+        except AssertionError as a:
+            "Exception:{} occured, this key does not exit in this dictionnary".format(a)
 
     def __setitem__(self, index, valeur):
-        """méthode appelée lorsqu'on veut stocker une valeur dans un dict special\
-            cad: objet[index]=valeur"""
+        """You can call this method when you want to store a value in your conatiner object
+        so: object[index]=value"""
 
         for i, cle in enumerate(self.key):
             if cle == index:
@@ -92,8 +86,8 @@ class DictionnaireOrdonne:
         self.value.append(valeur)
 
     def __delitem__(self, index):
-        """descrution d'un élément de l'objet conteneur"""
-        index_found = False  
+        """This method will delete the key and value wished inside the container object"""
+        index_found = False
         try:
             for i, cle in enumerate(self.key):
                 if cle == index:
@@ -107,12 +101,13 @@ class DictionnaireOrdonne:
             )
 
     def __len__(self):
-        """methode permettant d'obtenir la longueur du conteneur"""
+        """With this method you can get the lenght of your dictionary"""
         return len(self.key)
 
     def __contains__(self, object_container):
-        """Méthode renvoyant un booléenne si l'objet cherché est contenu dans l'objet conteneur"""
-        container = False  
+        """With this method you can search for a specific key and if it find inside
+        the dictionary it will return True if not False"""
+        container = False
         for i in self.key:
             if i == object_container:
                 container = True
@@ -120,13 +115,12 @@ class DictionnaireOrdonne:
         return container
 
     def __iter__(self):
-        """méthode permettant de créer un objet qui va pouvoir parcourir\
-            l'objet conteneur """
+        """With this method you have an ietrator which will allow you to go through
+        your dictionary"""
         return self
 
     def __next__(self):
-        """méthode qui va permettre a l'objet itérateur de passer d'un \
-            élément à l'autre dans l'objet conteneur"""
+        """This method help iterator method to get step by step (index) the value in your dictionary"""
         if self.item == False:
             if self.position == len(self.key) - 1:
                 raise StopIteration
@@ -140,17 +134,15 @@ class DictionnaireOrdonne:
 
             return self.key[self.position], self.value[self.position]
 
-    def __add__(self, object_added:dict()):
-        """Additionner des objets conteneurs entre eux: d1= d1 + d2"""
-        object_added_type_dict = json.loads(
-            str(object_added)
-        )  
+    def __add__(self, object_added: dict()):
+        """Add method between type DictionnaireOrdonnee d1= d1 + d2"""
+        object_added_type_dict = json.loads(str(object_added))
         if (type(object_added_type_dict) is not dict) and (
             type(object_added_type_dict) is not DictionnaireOrdonne
         ):
             raise TypeError(
-                "Cecin'est pas un dictionnaire, veuillez entrer un dictionnaire soit d"
-                "type dict, ou DictionnaireOrdonne"
+                "This is not a dictionary, please enter either"
+                "a type dict, ou a type DictionnaireOrdonne dictionary"
             )
         else:
 
@@ -161,31 +153,19 @@ class DictionnaireOrdonne:
         return self
 
     def sort(self, reverse=False):
-        """Fonction permettant de trier le dictionnaireOrdonnee: aissance de la classe"""
+        """Main function: allow your dictionary to be sorted. You can also reverse
+        the sort by applying reverse = True"""
         if reverse == False:
 
-            sorted_a = []
-            sorted_b = []
-            sorted_cle = []
-            sorted_value = self.key
-              
-
             sorted_cle = sorted(self.key)
+            sorted_value = self.value
 
-            for elem1 in self.key:
-                sorted_b.append(elem1)
+            for i3, elem3 in enumerate(sorted_cle):
 
-            for elem2 in sorted_cle:
-                sorted_a.append(elem2)
-
-            for i3, elem3 in enumerate(sorted_b):
-
-                for i4, elem4 in enumerate(sorted_a):
+                for i4, elem4 in enumerate(self.key):
 
                     if elem3 == elem4:
-                        sorted_value[i4] = self.value[i3]
-                    else:
-                        pass
+                        sorted_value[i3] = self.value[i4]
 
             self.key = sorted_cle
             self.value = sorted_value
@@ -194,27 +174,15 @@ class DictionnaireOrdonne:
 
         elif reverse == True:
 
-            sorted_a = []
-            sorted_b = []
-            sorted_cle = []
-            sorted_value = self.key
-
             sorted_cle = sorted(self.key, reverse=True)
+            sorted_value = self.value
 
-            for elem1 in self.key:
-                sorted_b.append(elem1)
+            for i3, elem3 in enumerate(sorted_cle):
 
-            for elem2 in sorted_cle:
-                sorted_a.append(elem2)
-
-            for i3, elem3 in enumerate(sorted_b):
-
-                for i4, elem4 in enumerate(sorted_a):
+                for i4, elem4 in enumerate(self.key):
 
                     if elem3 == elem4:
-                        sorted_value[i4] = self.value[i3]
-                    else:
-                        pass
+                        sorted_value[i3] = self.value[i4]
 
             self.key = sorted_cle
             self.value = sorted_value
@@ -222,15 +190,14 @@ class DictionnaireOrdonne:
             return self
 
     def keys(self):
-        """Méthode renvoyant une liste des clés de l'objet conteneur appelant"""
+        """With this method you can get the keys list"""
         return self.key
 
     def values(self):
-        """Méthode renvoyant une liste des valeurs de l'objet conteneur appelant"""
+        """With this method you can get the values list"""
         return self.value
 
     def items(self):
-        """Méthode permettant de renvoyer un tuple contenant la clé et la valeur\
-            de l'objet conteneur appelant"""
+        """This method allows you to get the tuple of key,value of your container object"""
         self.item = True
         return iter(self)
