@@ -3,10 +3,10 @@ import json
 import typing
 
 
-class DictionnaireOrdonne:
+class structuredDictionary:
     """This class allows you to manage your own created container object"""
 
-    def __init__(self, dictionary: typing.Optional[dict] = dict(), **parameters):
+    def __init__(self, dictionary: typing.Optional[dict] = dict(), **parameters)->None:
         """3 ways to create your own container object: dict(), dict("p":2,"d":3), dict(dict1)
         here we create 2 lists which will be respectively the keys and the values"""
 
@@ -16,11 +16,11 @@ class DictionnaireOrdonne:
         self.item = False
 
         if (type(dictionary) is not dict) and (
-            type(dictionary) is not DictionnaireOrdonne
+            type(dictionary) is not structuredDictionary
         ):
             raise TypeError(
                 "This is not a dictionary, please enter either"
-                "a type dict, ou a type DictionnaireOrdonne dictionary"
+                "a type dict, ou a type structuredDictionary dictionary"
             )
         else:
             for cle in dictionary:
@@ -31,7 +31,7 @@ class DictionnaireOrdonne:
                 self.key.append(clep)
                 self.value.append(valuep)
 
-    def __repr__(self):
+    def __repr__(self)->str:
         """Dictionary representation on the terminal"""
         dictionary_str = "{"
         nbr_cle = len(self.key)
@@ -57,11 +57,11 @@ class DictionnaireOrdonne:
 
         return "{}".format(dictionary_str)
 
-    def __str__(self):
+    def __str__(self)->str:
         """This function will be call when using print(), and it will call __repr__"""
         return repr(self)
 
-    def __getitem__(self, index):
+    def __getitem__(self, index)->str:
         """This method will be call when you will do object[index]
         it will go towards self._dict_conteneur"""
         try:
@@ -74,7 +74,7 @@ class DictionnaireOrdonne:
         except AssertionError as a:
             "Exception:{} occured, this key does not exit in this dictionnary".format(a)
 
-    def __setitem__(self, index, valeur):
+    def __setitem__(self, index, valeur)->None:
         """You can call this method when you want to store a value in your conatiner object
         so: object[index]=value"""
 
@@ -85,7 +85,7 @@ class DictionnaireOrdonne:
         self.key.append(index)
         self.value.append(valeur)
 
-    def __delitem__(self, index):
+    def __delitem__(self, index)->None:
         """This method will delete the key and value wished inside the container object"""
         index_found = False
         try:
@@ -100,11 +100,11 @@ class DictionnaireOrdonne:
                 a
             )
 
-    def __len__(self):
+    def __len__(self)->int:
         """With this method you can get the lenght of your dictionary"""
         return len(self.key)
 
-    def __contains__(self, object_container):
+    def __contains__(self, object_container)->bool:
         """With this method you can search for a specific key and if it find inside
         the dictionary it will return True if not False"""
         container = False
@@ -119,7 +119,7 @@ class DictionnaireOrdonne:
         your dictionary"""
         return self
 
-    def __next__(self):
+    def __next__(self)->str:
         """This method help iterator method to get step by step (index) the value in your dictionary"""
         if self.item == False:
             if self.position == len(self.key) - 1:
@@ -135,14 +135,14 @@ class DictionnaireOrdonne:
             return self.key[self.position], self.value[self.position]
 
     def __add__(self, object_added: dict()):
-        """Add method between type DictionnaireOrdonnee d1= d1 + d2"""
+        """Add method between type structuredDictionarye d1= d1 + d2"""
         object_added_type_dict = json.loads(str(object_added))
         if (type(object_added_type_dict) is not dict) and (
-            type(object_added_type_dict) is not DictionnaireOrdonne
+            type(object_added_type_dict) is not structuredDictionary
         ):
             raise TypeError(
                 "This is not a dictionary, please enter either"
-                "a type dict, ou a type DictionnaireOrdonne dictionary"
+                "a type dict, ou a type structuredDictionary dictionary"
             )
         else:
 
@@ -189,11 +189,11 @@ class DictionnaireOrdonne:
 
             return self
 
-    def keys(self):
+    def keys(self)->list:
         """With this method you can get the keys list"""
         return self.key
 
-    def values(self):
+    def values(self)->listTP:
         """With this method you can get the values list"""
         return self.value
 

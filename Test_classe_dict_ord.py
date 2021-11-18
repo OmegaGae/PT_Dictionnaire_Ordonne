@@ -4,9 +4,9 @@
 import TP_dict_ordonnee_v2 as dic_ord
 
 dict1 = {"jil": 0, "emely": 8, "pierre": 8}
-dict2 = dic_ord.DictionnaireOrdonne()
-dict3 = dic_ord.DictionnaireOrdonne(dict1)
-dict4 = dic_ord.DictionnaireOrdonne(carotte=26, haricot=48, noix=27)
+dict2 = dic_ord.structuredDictionary()
+dict3 = dic_ord.structuredDictionary(dict1)
+dict4 = dic_ord.structuredDictionary(carotte=26, haricot=48, noix=27)
 
 print(dict2)
 print(dict3)
