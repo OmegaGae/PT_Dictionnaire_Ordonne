@@ -77,13 +77,15 @@ class structuredDictionary:
     def __setitem__(self, index, valeur)->None:
         """You can call this method when you want to store a value in your conatiner object
         so: object[index]=value"""
-
+        index_found = False
         for i, cle in enumerate(self.key):
             if cle == index:
+                index_found = True  
                 self.value[i] = valeur
-
-        self.key.append(index)
-        self.value.append(valeur)
+        
+        if index_found ==False:
+            self.key.append(index)
+            self.value.append(valeur)
 
     def __delitem__(self, index)->None:
         """This method will delete the key and value wished inside the container object"""
@@ -101,7 +103,7 @@ class structuredDictionary:
             )
 
     def __len__(self)->int:
-        """With this method you can get the lenght of your dictionary"""
+        """With this method you can get the length of your dictionary"""
         return len(self.key)
 
     def __contains__(self, object_container)->bool:
@@ -193,7 +195,7 @@ class structuredDictionary:
         """With this method you can get the keys list"""
         return self.key
 
-    def values(self)->listTP:
+    def values(self)->list:
         """With this method you can get the values list"""
         return self.value
 
