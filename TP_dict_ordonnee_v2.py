@@ -158,14 +158,10 @@ class StructuredDictionary:
         if reverse == False:
             
             sorted_cle = sorted(self.key)
-            sorted_value = self.value
+            sorted_value = []
 
-            for i3, elem3 in enumerate(sorted_cle):
-
-                for i4, elem4 in enumerate(self.key):
-
-                    if elem3 == elem4:
-                        sorted_value[i3] = self.value[i4]
+            for key in sorted_cle:
+                sorted_value.append(self[key])
 
             self.key = sorted_cle
             self.value = sorted_value
@@ -175,17 +171,13 @@ class StructuredDictionary:
         elif reverse == True:
 
             sorted_cle = sorted(self.key, reverse=True)
-            sorted_value = self.value
+            sorted_value_reverse = []
 
-            for i3, elem3 in enumerate(sorted_cle):
-
-                for i4, elem4 in enumerate(self.key):
-
-                    if elem3 == elem4:
-                        sorted_value[i3] = self.value[i4]
+            for key_reverse in sorted_cle:
+                sorted_value_reverse.append(self[key_reverse])
 
             self.key = sorted_cle
-            self.value = sorted_value
+            self.value = sorted_value_reverse
 
             return self
 

@@ -3,3 +3,14 @@ __pycache__/
 __pycache__
 TP_dictionnaire_ordonnee.py
 .test_dictionnaire_ordonnee.py.swp
+.test_dictionnaire_ordonnee.py.swm
+.test_dictionnaire_ordonnee.py.swn
+.test_dictionnaire_ordonnee.py.swo
+.coverage_test_unittest.bat.swm
+.coverage_test_unittest.bat.swn
+.coverage_test_unittest.bat.swo
+.coverage_test_unittest.bat.swp
+AnnotationbyCov/
+.coverage
+
+
