@@ -3,7 +3,7 @@ import json
 import typing
 
 
-class structuredDictionary:
+class StructuredDictionary:
     """This class allows you to manage your own created container object"""
 
     def __init__(self, dictionary: typing.Optional[dict] = dict(), **parameters)->None:
@@ -16,11 +16,11 @@ class structuredDictionary:
         self.item = False
 
         if (type(dictionary) is not dict) and (
-            type(dictionary) is not structuredDictionary
+            type(dictionary) is not StructuredDictionary
         ):
             raise TypeError(
                 "This is not a dictionary, please enter either"
-                "a type dict, ou a type structuredDictionary dictionary"
+                "a type dict, ou a type StructuredDictionary dictionary"
             )
         else:
             for cle in dictionary:
@@ -53,30 +53,30 @@ class structuredDictionary:
                     dictionary_str + '"' + str(elem) + '"' + ":" + str(self.value[i])
                 )
 
-        dictionary_str = "".join(dictionary_str) + "}" + "\n"
+        dictionary_str = "".join(dictionary_str) + "}"
 
         return "{}".format(dictionary_str)
 
-    def __str__(self)->str:
-        """This function will be call when using print(), and it will call __repr__"""
+    def __str__(self)->repr:
+        """This function will be called when using print(), and it will call __repr__"""
         return repr(self)
 
     def __getitem__(self, index)->str:
-        """This method will be call when you will do object[index]
-        it will go towards self._dict_conteneur"""
-        try:
-            index_found = False
-            for i, cle in enumerate(self.key):
-                if cle == index:
-                    index_found = True
-                    return "{}".format(self.value[i])
-            assert index_found
-        except AssertionError as a:
-            "Exception:{} occured, this key does not exit in this dictionnary".format(a)
+        """This method will be called when doing object[index]
+        it will go towards self.dict_container"""
+        
+        index_found = False
+        for i, cle in enumerate(self.key):
+            if cle == index:
+                index_found = True
+                return self.value[i]
+                
+        if not index_found:
+            raise ValueError("Exception occured, this key does not exit in this dictionnary, so impossible to get the value")
 
     def __setitem__(self, index, valeur)->None:
-        """You can call this method when you want to store a value in your conatiner object
-        so: object[index]=value"""
+        """You can called this method when you want to store a value in your conatiner object
+        as: object[index]=value"""
         index_found = False
         for i, cle in enumerate(self.key):
             if cle == index:
@@ -90,24 +90,23 @@ class structuredDictionary:
     def __delitem__(self, index)->None:
         """This method will delete the key and value wished inside the container object"""
         index_found = False
-        try:
-            for i, cle in enumerate(self.key):
-                if cle == index:
-                    index_found = True
-                    del self.key[i]
-                    del self.value[i]
-            assert index_found
-        except AssertionError as a:
-            "Exception:{} occured, this key does not exit in this dictionnary, so impossible to delete".format(
-                a
-            )
+       
+        for i, cle in enumerate(self.key):
+            if cle == index:
+                index_found = True
+                del self.key[i]
+                del self.value[i]
+        
+        if not index_found:
+            raise ValueError("Exception occured, this key does not exit in this dictionnary, so impossible to delete")
+        
 
     def __len__(self)->int:
         """With this method you can get the length of your dictionary"""
         return len(self.key)
 
     def __contains__(self, object_container)->bool:
-        """With this method you can search for a specific key and if it find inside
+        """With this method you can search for a specific key and if it found inside
         the dictionary it will return True if not False"""
         container = False
         for i in self.key:
@@ -137,17 +136,16 @@ class structuredDictionary:
             return self.key[self.position], self.value[self.position]
 
     def __add__(self, object_added: dict()):
-        """Add method between type structuredDictionarye d1= d1 + d2"""
+        """Add method between type StructuredDictionarye d1= d1 + d2"""
         object_added_type_dict = json.loads(str(object_added))
         if (type(object_added_type_dict) is not dict) and (
-            type(object_added_type_dict) is not structuredDictionary
+            type(object_added_type_dict) is not StructuredDictionary
         ):
             raise TypeError(
                 "This is not a dictionary, please enter either"
-                "a type dict, ou a type structuredDictionary dictionary"
+                "a type dict, ou a type StructuredDictionary dictionary"
             )
         else:
-
             for cle in dict(object_added_type_dict):
                 self.key.append(cle)
                 self.value.append(object_added_type_dict[cle])
@@ -158,7 +156,7 @@ class structuredDictionary:
         """Main function: allow your dictionary to be sorted. You can also reverse
         the sort by applying reverse = True"""
         if reverse == False:
-
+            
             sorted_cle = sorted(self.key)
             sorted_value = self.value
 
