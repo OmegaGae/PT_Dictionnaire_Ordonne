@@ -135,18 +135,18 @@ class StructuredDictionary:
 
             return self.key[self.position], self.value[self.position]
 
-    def __add__(self, object_added: dict()):
+    def __add__(self, object_added: typing.Optional[dict] = dict()):
         """Add method between type StructuredDictionarye d1= d1 + d2"""
-        object_added_type_dict = json.loads(str(object_added))
-        if (type(object_added_type_dict) is not dict) and (
-            type(object_added_type_dict) is not StructuredDictionary
+        
+        if (type(object_added) is not dict) and (
+            type(object_added) is not StructuredDictionary
         ):
             raise TypeError(
-                "This is not a dictionary, please enter either"
-                "a type dict, ou a type StructuredDictionary dictionary"
+                "This is not a dictionary, please enter either a type dict, ou a type StructuredDictionary dictionary"
             )
         else:
-            for cle in dict(object_added_type_dict):
+            object_added_type_dict = json.loads(str(object_added))
+            for cle in object_added_type_dict:
                 self.key.append(cle)
                 self.value.append(object_added_type_dict[cle])
 

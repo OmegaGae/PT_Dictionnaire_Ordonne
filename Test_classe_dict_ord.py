@@ -34,6 +34,10 @@ for cle in dict4:
 
 dict2 = dict2 + dict4
 print(dict2)
+#added for tested another case but not in exercice
+dict_fake=1982733929829
+dict2 = dict2 + dict_fake
+#
 
 dict2.sort()
 print(dict2)

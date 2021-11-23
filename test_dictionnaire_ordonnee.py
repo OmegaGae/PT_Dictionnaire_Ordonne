@@ -48,10 +48,10 @@ class TestStructuredDictionaryInitCase3(unittest.TestCase):
         self.assertEqual(dictionary_3.value,self.expected_values)
         
 
-@parameterized_class(("dictionary","dictionary_deleted","key1","key2","key3","key_no_exist","value1","value2","value3","expected_keys","expected_values"),[
+@parameterized_class(("dictionary","dictionary_deleted","key1","key2","key3","key_exist","key_no_exist","value1","value2","value3","expected_keys","expected_values","expected_values_setitem"),[
 
-    ({"jil":0,"emely":8,"pierre":3},{"jil":0,"emely":8,"pierre":3},"jil","emely","pierre","nothing",0,8,3,["jil","emely","pierre"],[0,8,3]),
-    ({"pomme":10,"richie":11,"pierrot":9},{"pomme":10,"richie":11,"pierrot":9},"pomme","richie","pierrot","nothing2",10,11,9,["pomme","richie","pierrot"],[10,11,9]),
+    ({"jil":0,"emely":8,"pierre":3},{"jil":0,"emely":8,"pierre":3},"jil","emely","pierre","emely","nothing",0,8,3,["jil","emely","pierre"],[0,8,3],[0,3,3]),
+    ({"pomme":10,"richie":11,"pierrot":9},{"pomme":10,"richie":11,"pierrot":9},"pomme","richie","pierrot","richie","nothing2",10,11,9,["pomme","richie","pierrot"],[10,11,9],[10,9,9]),
         ])
 class TestStructuredDictionaryContainer(unittest.TestCase):
     
@@ -61,7 +61,9 @@ class TestStructuredDictionaryContainer(unittest.TestCase):
         empty_dictionary[self.key1] = self.value1
         empty_dictionary[self.key2] = self.value2
         empty_dictionary[self.key3] = self.value3
-        self.assertEqual(empty_dictionary.value,self.expected_values)
+        empty_dictionary[self.key_exist] = self.value3
+
+        self.assertEqual(empty_dictionary.value,self.expected_values_setitem)
         
        
     def test_getitem(self):
@@ -76,13 +78,10 @@ class TestStructuredDictionaryContainer(unittest.TestCase):
 
     def test_key_and_value(self):
        
-        key_value_dictionary = StructuredDictionary(self.dictionary)
-
-        get_key = key_value_dictionary.key
-        get_value = key_value_dictionary.value
+        key_value_dictionary = StructuredDictionary(self.dictionary)    
         
-        self.assertEqual(get_key,self.expected_keys)
-        self.assertEqual(get_value,self.expected_values)
+        self.assertEqual(key_value_dictionary.keys(),self.expected_keys)
+        self.assertEqual(key_value_dictionary.values(),self.expected_values)
    
     def test_delitem(self):
 
@@ -94,6 +93,7 @@ class TestStructuredDictionaryContainer(unittest.TestCase):
         
         with self.assertRaises(ValueError):
             del delitem_dictionary[self.key_no_exist]
+        
 
 
 @parameterized_class([
@@ -110,11 +110,11 @@ class TestStructuredDictionaryContains(unittest.TestCase):
  
 
 
-@parameterized_class(("dictionary1","dictionary2","expected_length","expected_add","expected_sort","expected_sort_reverse"),[
+@parameterized_class(("dictionary1","dictionary2","fake_dictionary","expected_length","expected_add","expected_sort","expected_sort_reverse"),[
 
-    ({"jil":0,"emely":8,"pierre":9},{"julien":6,"elene":8,"patrick":18},3,{"jil":0,"emely":8,"pierre":9,"julien":6,"elene":8,"patrick":18},{"emely":8,"jil":0,"pierre":9},{"pierre":9,"jil":0,"emely":8}),
-    ({"jil":0,"emely":8},{"franck":0,"emo":4,"pierre":9},2,{"jil":0,"emely":8,"franck":0,"emo":4,"pierre":9},{"emely":8,"jil":0},{"jil":0,"emely":8}),
-    ({"jil":0,"emely":8,"pierre":9,"pat":44,"vero":34},{"jack":89,"emelyne":23,"paul":97},5,{"jil":0,"emely":8,"pierre":9,"pat":44,"vero":34,"jack":89,"emelyne":23,"paul":97},{"emely":8,"jil":0,"pat":44,"pierre":9,"vero":34},{"vero":34,"pierre":9,"pat":44,"jil":0,"emely":8}),
+    ({"jil":0,"emely":8,"pierre":9},{"julien":6,"elene":8,"patrick":18},["{","emely",":",0,"}"],3,{"jil":0,"emely":8,"pierre":9,"julien":6,"elene":8,"patrick":18},{"emely":8,"jil":0,"pierre":9},{"pierre":9,"jil":0,"emely":8}),
+    ({"jil":0,"emely":8},{"franck":0,"emo":4,"pierre":9},"\"emely\":0",2,{"jil":0,"emely":8,"franck":0,"emo":4,"pierre":9},{"emely":8,"jil":0},{"jil":0,"emely":8}),
+    ({"jil":0,"emely":8,"pierre":9,"pat":44,"vero":34},{"jack":89,"emelyne":23,"paul":97},1011091011081215848,5,{"jil":0,"emely":8,"pierre":9,"pat":44,"vero":34,"jack":89,"emelyne":23,"paul":97},{"emely":8,"jil":0,"pat":44,"pierre":9,"vero":34},{"vero":34,"pierre":9,"pat":44,"jil":0,"emely":8}),
 ])
 class TestStructuredDictionary(unittest.TestCase):
     
@@ -123,9 +123,14 @@ class TestStructuredDictionary(unittest.TestCase):
 
     def test_add(self):
         
-        structured_dictionary3 =  StructuredDictionary(self.dictionary1) + StructuredDictionary(self.dictionary2)
-        self.assertEqual(json.loads(str(structured_dictionary3)),self.expected_add)
-    
+        structured_dictionary1 =  StructuredDictionary(self.dictionary1) + StructuredDictionary(self.dictionary2)
+        self.assertEqual(json.loads(str(structured_dictionary1)),self.expected_add)
+        
+        with self.assertRaises(TypeError):
+            structured_dictionary_error = StructuredDictionary(self.dictionary1)
+            structured_dictionary_error = structured_dictionary_error + self.fake_dictionary
+        
+
     def test_sort(self):
         self.assertEqual(json.loads(str(StructuredDictionary(self.dictionary1).sort())),self.expected_sort)
         self.assertEqual(json.loads(str(StructuredDictionary(self.dictionary1).sort(reverse=True))),self.expected_sort_reverse)
