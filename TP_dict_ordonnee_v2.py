@@ -65,14 +65,11 @@ class StructuredDictionary:
         """This method will be called when doing object[index]
         it will go towards self.dict_container"""
         
-        index_found = False
         for i, cle in enumerate(self.key):
             if cle == index:
-                index_found = True
                 return self.value[i]
                 
-        if not index_found:
-            raise ValueError("Exception occured, this key does not exit in this dictionnary, so impossible to get the value")
+        raise ValueError("Exception occured, this key does not exit in this dictionnary, so impossible to get the value")
 
     def __setitem__(self, index, valeur)->None:
         """You can called this method when you want to store a value in your conatiner object
@@ -155,31 +152,19 @@ class StructuredDictionary:
     def sort(self, reverse=False):
         """Main function: allow your dictionary to be sorted. You can also reverse
         the sort by applying reverse = True"""
-        if reverse == False:
-            
-            sorted_cle = sorted(self.key)
-            sorted_value = []
+    
+        sorted_cle = sorted(self.key, reverse=reverse)
+        sorted_value = []
 
-            for key in sorted_cle:
-                sorted_value.append(self[key])
+        for key in sorted_cle:
+            sorted_value.append(self[key])
 
-            self.key = sorted_cle
-            self.value = sorted_value
+        self.key = sorted_cle
+        self.value = sorted_value
 
-            return self
+        return self
 
-        elif reverse == True:
-
-            sorted_cle = sorted(self.key, reverse=True)
-            sorted_value_reverse = []
-
-            for key_reverse in sorted_cle:
-                sorted_value_reverse.append(self[key_reverse])
-
-            self.key = sorted_cle
-            self.value = sorted_value_reverse
-
-            return self
+        
 
     def keys(self)->list:
         """With this method you can get the keys list"""
